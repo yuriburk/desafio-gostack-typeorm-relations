@@ -23,9 +23,6 @@ export default class OrdersController {
 
     const order = await createOrder.execute({ customer_id, products });
 
-    return response.json({
-      customer: order.customer,
-      order_products: order.order_products,
-    });
+    return response.json(order);
   }
 }

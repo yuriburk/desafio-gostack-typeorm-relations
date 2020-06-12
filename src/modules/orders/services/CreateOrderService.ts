@@ -4,6 +4,7 @@ import AppError from '@shared/errors/AppError';
 
 import IProductsRepository from '@modules/products/repositories/IProductsRepository';
 import ICustomersRepository from '@modules/customers/repositories/ICustomersRepository';
+import IUpdateProductsQuantityDTO from '@modules/products/dtos/IUpdateProductsQuantityDTO';
 import Order from '../infra/typeorm/entities/Order';
 import IOrdersRepository from '../repositories/IOrdersRepository';
 
@@ -43,8 +44,8 @@ class CreateOrderService {
       throw new AppError('One or more products were not found');
     }
 
-    const updateProducts: IProduct[] = [];
-    productsFound.forEach(productFound => {
+    const updateProducts: IUpdateProductsQuantityDTO[] = [];
+    const productsOrder = productsFound.map(productFound => {
       const productBought = products.find(
         product => product.id === productFound.id,
       );
@@ -60,14 +61,19 @@ class CreateOrderService {
       }
 
       updateProducts.push({
-        id: productBought.id,
+        id: productFound.id,
         quantity: productFound.quantity - productBought.quantity,
       });
+
+      return {
+        ...productFound,
+        quantity: productBought.quantity,
+      };
     });
 
     await this.productsRepository.updateQuantity(updateProducts);
 
-    const productsDTO = productsFound.map(product => ({
+    const productsDTO = productsOrder.map(product => ({
       product_id: product.id,
       quantity: product.quantity,
       price: product.price,
