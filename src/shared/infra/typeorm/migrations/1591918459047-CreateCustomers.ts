@@ -5,7 +5,7 @@ export default class CreateCustomers1591918459047
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'Customers',
+        name: 'customers',
         columns: [
           {
             name: 'id',
@@ -17,22 +17,20 @@ export default class CreateCustomers1591918459047
           {
             name: 'name',
             type: 'varchar',
-            isNullable: false,
           },
           {
             name: 'email',
             type: 'varchar',
             isUnique: true,
-            isNullable: false,
           },
           {
             name: 'created_at',
-            type: 'timestamp with time zone',
+            type: 'timestamp',
             default: 'now()',
           },
           {
             name: 'updated_at',
-            type: 'timestamp with time zone',
+            type: 'timestamp',
             default: 'now()',
           },
         ],
@@ -41,6 +39,6 @@ export default class CreateCustomers1591918459047
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('Customers');
+    await queryRunner.dropTable('customers');
   }
 }

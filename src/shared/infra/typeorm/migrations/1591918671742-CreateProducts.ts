@@ -4,7 +4,7 @@ export default class CreateProducts1591918671742 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'Products',
+        name: 'products',
         columns: [
           {
             name: 'id',
@@ -17,28 +17,25 @@ export default class CreateProducts1591918671742 implements MigrationInterface {
             name: 'name',
             type: 'varchar',
             isUnique: true,
-            isNullable: false,
           },
           {
             name: 'price',
             type: 'decimal',
             precision: 8,
             scale: 2,
-            isNullable: false,
           },
           {
             name: 'quantity',
             type: 'int',
-            isNullable: false,
           },
           {
             name: 'created_at',
-            type: 'timestamp with time zone',
+            type: 'timestamp',
             default: 'now()',
           },
           {
             name: 'updated_at',
-            type: 'timestamp with time zone',
+            type: 'timestamp',
             default: 'now()',
           },
         ],
@@ -47,6 +44,6 @@ export default class CreateProducts1591918671742 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('Products');
+    await queryRunner.dropTable('products');
   }
 }

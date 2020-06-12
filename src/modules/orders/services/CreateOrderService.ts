@@ -61,7 +61,7 @@ class CreateOrderService {
 
       updateProducts.push({
         id: productBought.id,
-        quantity: productFound.quantity - productFound.quantity,
+        quantity: productFound.quantity - productBought.quantity,
       });
     });
 
